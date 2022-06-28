@@ -25,4 +25,8 @@ export class QueueControllerComponent implements OnInit {
   skipPersonHandler() {
     this.queueService.skipPerson();
   }
+
+  resetEverythingHandler() {
+    this.queueService.TEST_ONLY_resetEverything();
+  }
 }

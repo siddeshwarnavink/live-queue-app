@@ -6,11 +6,10 @@
     <section *ngIf="queueService.getSingleQueue().isLive">
         <app-queue-controller></app-queue-controller>
         <app-pending-queue></app-pending-queue>
+        <app-select-next-person></app-select-next-person>
     </section>
 
     <app-queue-start *ngIf="!queueService.getSingleQueue().isLive" [title]="queueService.getSingleQueue().title"
         [totalBooked]="queueService.getSingleQueue().totalBooked"
         [totalBooking]="queueService.getSingleQueue().totalBooking"></app-queue-start>
 </section>
-
-<app-select-next-person></app-select-next-person>

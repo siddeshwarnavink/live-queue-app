@@ -1,3 +1,8 @@
+<app-button (click)="resetEverythingHandler()">
+    Reset everything
+</app-button>
+
+
 <div class="p-5 bg-white rounded-xl flex flex-col">
     <section *ngIf="queueService.selectedPersonLoading" class="text-center">
         <app-spinner></app-spinner>
@@ -19,7 +24,7 @@
             <app-button *ngIf="queueService.selectedPerson.tokenNumber!==this.queueService.getSingleQueue().totalBooked"
                 (click)="goToNextPersonHandler()">Next person</app-button>
 
-            <app-button
+            <app-button (click)="resetEverythingHandler()"
                 *ngIf="queueService.selectedPerson.tokenNumber===this.queueService.getSingleQueue().totalBooked">
                 Done
             </app-button>

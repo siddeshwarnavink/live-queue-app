@@ -1,13 +1,8 @@
 <div class="my-5">
     <span class="font-bold text-xl">Next up</span>
 
-    <div *ngIf="personsService.upNextListLoading" class="text-center">
-        <app-spinner></app-spinner>
-    </div>
-    <div *ngIf="!personsService.upNextListLoading">
-        <!-- <app-pending-item [delayAttendee]="true"></app-pending-item> -->
-        <app-pending-item *ngFor="let person of personsService.upNextList" [name]="person.name"
-            [pfpSeed]="person.pfpSeed">
-        </app-pending-item>
-    </div>
+    <!-- <app-pending-item [delayAttendee]="true"></app-pending-item> -->
+    <app-pending-item *ngFor="let person of personsService.upNextList" [name]="person.name" [pfpSeed]="person.pfpSeed"
+        [delayAttendee]="person.isOnNextUp && person.isSkipped">
+    </app-pending-item>
 </div>

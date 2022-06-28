@@ -4,8 +4,7 @@ import { PersonsService } from 'src/app/queue/persons.service';
 
 @Component({
   selector: 'app-pending-queue',
-  templateUrl: './pending-queue.component.html',
-  styleUrls: ['./pending-queue.component.css']
+  templateUrl: './pending-queue.component.html'
 })
 export class PendingQueueComponent implements OnInit {
 

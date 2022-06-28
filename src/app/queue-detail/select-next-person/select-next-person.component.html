@@ -1,9 +1,10 @@
 <app-bottom-overlay [isOpen]="isOverlayOpen" (toggle)="toggleOverlayHandler()">
     <h1 class="text-2xl text-center font-bold my-1">Select next person</h1>
 
-    <app-pending-item  name="Bill"></app-pending-item>
-    <app-pending-item  name="John"></app-pending-item>
-    <app-pending-item  name="Ethen"></app-pending-item>
+    <button class="w-max" *ngFor="let person of personsService.skippedList" (click)="selectPersonHandler(person.id)">
+        <app-pending-item [name]="person.name" [pfpSeed]="person.pfpSeed">
+        </app-pending-item>
+    </button>
 </app-bottom-overlay>
 
 <div class="fixed bottom-0 left-0 w-screen flex justify-around my-5">

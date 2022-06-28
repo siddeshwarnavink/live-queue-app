@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { collection, getDocs, onSnapshot, getDoc, doc, updateDoc, where, query, arrayUnion } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, getDoc, doc, updateDoc, where, query } from "firebase/firestore";
 
 import { Queue } from './queue.modal';
 import { firestore } from '../config/firebase';
+import { PersonsService } from './persons.service';
 
 @Injectable({
   providedIn: 'root'
@@ -128,26 +129,39 @@ export class QueueService {
     this.singleQueue.activeToken = newToken;
   }
 
-  updateNextUp(token: number) {
-    getDocs(query(collection(firestore, 'persons'), where('tokenNumber', '==', token))).then(docs => {
-      docs.forEach(nextUpPersonDoc => {
-        updateDoc(doc(firestore, 'persons', nextUpPersonDoc.id), {
+  updateNextUp(id: string, tokenNumber: number) {
+    updateDoc(doc(firestore, 'persons', id), {
+      isOnNextUp: false
+    });
+
+    getDocs(query(collection(firestore, 'persons'), where('tokenNumber', '==', tokenNumber + 1))).then(docs => {
+      docs.forEach(singleDoc => {
+        updateDoc(singleDoc.ref, {
           isOnNextUp: true
         });
-      });
+      })
     });
-    getDocs(query(collection(firestore, 'persons'), where('tokenNumber', '==', token - 1))).then(docs => {
-      docs.forEach(nextUpPersonDoc => {
-        updateDoc(doc(firestore, 'persons', nextUpPersonDoc.id), {
-          isOnNextUp: false
-        });
-      });
-    });
+    // getDocs(query(collection(firestore, 'persons'), where('tokenNumber', '==', token))).then(docs => {
+    //   docs.forEach(nextUpPersonDoc => {
+    //     updateDoc(doc(firestore, 'persons', nextUpPersonDoc.id), {
+    //       isOnNextUp: true
+    //     });
+    //   });
+    // });
+    // getDocs(query(collection(firestore, 'persons'), where('tokenNumber', '==', token - 1))).then(docs => {
+    //   docs.forEach(nextUpPersonDoc => {
+    //     updateDoc(doc(firestore, 'persons', nextUpPersonDoc.id), {
+    //       isOnNextUp: false
+    //     });
+    //   });
+    // });
   }
 
   goToNextPerson() {
-    this.updateSingleQueueActiveToken(this.singleQueue.activeToken + 1);
-    this.updateNextUp(this.singleQueue.activeToken + 1);
+    // Update upnext list
+    this.updateNextUp(this.personsService.upNextList[0].id, this.personsService.upNextList[0].tokenNumber);
+    // Update the currentSelected in queue document
+    this.updateSingleQueueActiveToken(this.personsService.upNextList[0].tokenNumber);
   }
 
   skipPerson() {
@@ -162,7 +176,7 @@ export class QueueService {
       this.updateSingleQueueActiveToken(this.singleQueue.activeToken + 1);
     });
 
-    this.updateNextUp(this.singleQueue.activeToken + 1);
+    this.updateNextUp(this.personsService.upNextList[0].id, this.personsService.upNextList[0].tokenNumber);
   }
 
   goLiveOnSingleSelectedQueue() {
@@ -190,5 +204,27 @@ export class QueueService {
     });
   }
 
-  constructor() { }
+  TEST_ONLY_resetEverything() {
+    console.log('RESETTING...');
+
+
+    updateDoc(doc(firestore, 'queue', this.singleQueue.id), {
+      isLive: false,
+      activeToken: 1
+    });
+
+    getDocs(query(collection(firestore, 'persons'))).then(docs => {
+      docs.forEach((personDoc): void => {
+        updateDoc(personDoc.ref, {
+          isOnNextUp: false,
+          isSkipped: false
+        })
+      });
+    });
+
+  }
+
+  constructor(
+    private personsService: PersonsService
+  ) { }
 }
