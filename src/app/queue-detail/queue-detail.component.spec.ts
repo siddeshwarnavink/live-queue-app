@@ -8,9 +8,9 @@ describe('QueueDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QueueDetailComponent ]
+      declarations: [QueueDetailComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(QueueDetailComponent);
     component = fixture.componentInstance;
