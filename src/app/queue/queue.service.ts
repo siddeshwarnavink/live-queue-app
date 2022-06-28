@@ -130,31 +130,21 @@ export class QueueService {
   }
 
   updateNextUp(id: string, tokenNumber: number) {
+    const isSkippedPerson = tokenNumber < this.selectedPerson.tokenNumber;
+
     updateDoc(doc(firestore, 'persons', id), {
       isOnNextUp: false
     });
 
-    getDocs(query(collection(firestore, 'persons'), where('tokenNumber', '==', tokenNumber + 1))).then(docs => {
-      docs.forEach(singleDoc => {
-        updateDoc(singleDoc.ref, {
-          isOnNextUp: true
-        });
-      })
-    });
-    // getDocs(query(collection(firestore, 'persons'), where('tokenNumber', '==', token))).then(docs => {
-    //   docs.forEach(nextUpPersonDoc => {
-    //     updateDoc(doc(firestore, 'persons', nextUpPersonDoc.id), {
-    //       isOnNextUp: true
-    //     });
-    //   });
-    // });
-    // getDocs(query(collection(firestore, 'persons'), where('tokenNumber', '==', token - 1))).then(docs => {
-    //   docs.forEach(nextUpPersonDoc => {
-    //     updateDoc(doc(firestore, 'persons', nextUpPersonDoc.id), {
-    //       isOnNextUp: false
-    //     });
-    //   });
-    // });
+    if (!isSkippedPerson) {
+      getDocs(query(collection(firestore, 'persons'), where('tokenNumber', '==', tokenNumber + 1))).then(docs => {
+        docs.forEach(singleDoc => {
+          updateDoc(singleDoc.ref, {
+            isOnNextUp: true
+          });
+        })
+      });
+    }
   }
 
   goToNextPerson() {
