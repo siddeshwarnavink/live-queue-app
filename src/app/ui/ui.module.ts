@@ -2,9 +2,11 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 
 import { ButtonComponent } from "./button/button.component";
+import { SpinnerComponent } from './spinner/spinner.component';
 
 const components = [
-    ButtonComponent
+    ButtonComponent,
+    SpinnerComponent
 ]
 
 @NgModule({

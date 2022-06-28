@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { QueueService } from '../queue/queue.service';
 
@@ -6,8 +6,16 @@ import { QueueService } from '../queue/queue.service';
   selector: 'app-queue-overview',
   templateUrl: './queue-overview.component.html'
 })
-export class QueueOverviewComponent {
+export class QueueOverviewComponent implements OnInit, OnDestroy {
   queueList = [];
 
   constructor(public queueService: QueueService) { }
+
+  ngOnInit(): void {
+    this.queueService.fetchQueueList();
+  }
+
+  ngOnDestroy(): void {
+    this.queueService.unsubscribeQueueListSubscriptions();
+  }
 }
