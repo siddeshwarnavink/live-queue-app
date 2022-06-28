@@ -2,7 +2,7 @@
     <span class="font-bold text-xl">Next up</span>
 
     <!-- <app-pending-item [delayAttendee]="true"></app-pending-item> -->
-    <app-pending-item *ngFor="let person of personsService.upNextList" [name]="person.name" [pfpSeed]="person.pfpSeed"
-        [delayAttendee]="person.isOnNextUp && person.isSkipped">
+    <app-pending-item *ngFor="let person of personsService.upNextList" [id]="person.id" [name]="person.name"
+        [pfpSeed]="person.pfpSeed" [delayAttendee]="person.isOnNextUp && person.isSkipped">
     </app-pending-item>
 </div>

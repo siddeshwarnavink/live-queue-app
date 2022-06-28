@@ -62,6 +62,13 @@ export class PersonsService {
         });
     }
 
+    removeSkippedUserFromNextUp(personId: string) {
+        updateDoc(doc(firestore, 'persons', personId), {
+            isOnNextUp: false,
+            isSkipped: true,
+        });
+    }
+
     unsubscribeQueueSubscriptions() {
         this.upNextPersonSubscription();
         this.skippedPersonsSubscription();

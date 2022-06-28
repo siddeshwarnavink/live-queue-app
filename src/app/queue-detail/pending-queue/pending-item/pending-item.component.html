@@ -9,6 +9,6 @@
     <div class="flex-1"></div>
 
     <div *ngIf="delayAttendee" class="flex flex-col justify-around mr-2">
-        <button class="text-purple-700 font-bold outline-none text-xl">X</button>
+        <button class="text-purple-700 font-bold outline-none text-xl" (click)="removeFromNextUpHandler()">X</button>
     </div>
 </div>
