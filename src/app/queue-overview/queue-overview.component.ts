@@ -16,6 +16,6 @@ export class QueueOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.queueService.unsubscribeQueueListSubscriptions();
+    this.queueService.unsubscribeQueueSubscriptions();
   }
 }
