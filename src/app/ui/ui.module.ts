@@ -3,10 +3,14 @@ import { NgModule } from "@angular/core";
 
 import { ButtonComponent } from "./button/button.component";
 import { SpinnerComponent } from './spinner/spinner.component';
+import { BottomOverlayComponent } from './bottom-overlay/bottom-overlay.component';
+import { BackdropComponent } from './backdrop/backdrop.component';
 
 const components = [
     ButtonComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    BottomOverlayComponent,
+    BackdropComponent
 ]
 
 @NgModule({

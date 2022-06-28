@@ -1,0 +1,13 @@
+<app-bottom-overlay [isOpen]="isOverlayOpen" (toggle)="toggleOverlayHandler()">
+    <h1 class="text-2xl text-center font-bold my-1">Select next person</h1>
+
+    <app-pending-item  name="Bill"></app-pending-item>
+    <app-pending-item  name="John"></app-pending-item>
+    <app-pending-item  name="Ethen"></app-pending-item>
+</app-bottom-overlay>
+
+<div class="fixed bottom-0 left-0 w-screen flex justify-around my-5">
+    <app-button (click)="toggleOverlayHandler()">
+        Select next person
+    </app-button>
+</div>

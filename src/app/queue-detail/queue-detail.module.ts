@@ -7,13 +7,15 @@ import { QueueStartComponent } from "./queue-start/queue-start.component";
 import { PendingItemComponent } from "./pending-queue/pending-item/pending-item.component";
 import { QueueDetailComponent } from "./queue-detail.component";
 import { CommonModule } from "@angular/common";
+import { SelectNextPersonComponent } from './select-next-person/select-next-person.component';
 
 const components = [
     QueueDetailComponent,
     PendingQueueComponent,
     QueueControllerComponent,
     QueueStartComponent,
-    PendingItemComponent
+    PendingItemComponent,
+    SelectNextPersonComponent
 ]
 
 @NgModule({

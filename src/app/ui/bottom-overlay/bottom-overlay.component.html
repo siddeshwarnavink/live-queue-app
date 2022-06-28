@@ -1,0 +1,9 @@
+<section *ngIf="isOpen">
+    <app-backdrop (click)="closeOverlayHandler()"></app-backdrop>
+
+    <div class="fixed bottom-0 left-0 w-screen h-96 bg-white z-50 rounded-t-2xl">
+        <div class="py-3 px-5">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</section>
