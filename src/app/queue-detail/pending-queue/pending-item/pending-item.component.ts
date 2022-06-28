@@ -5,6 +5,8 @@ import { Component, Input } from '@angular/core';
   templateUrl: './pending-item.component.html'
 })
 export class PendingItemComponent {
+  @Input() name?: string;
+  @Input() pfpSeed?: string;
   @Input() delayAttendee = false;
 
   constructor() { }

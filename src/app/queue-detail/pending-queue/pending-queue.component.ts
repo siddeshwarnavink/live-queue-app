@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { PersonsService } from 'src/app/queue/persons.service';
+
 @Component({
   selector: 'app-pending-queue',
   templateUrl: './pending-queue.component.html',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PendingQueueComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public personsService: PersonsService
+  ) { }
 
   ngOnInit(): void {
   }

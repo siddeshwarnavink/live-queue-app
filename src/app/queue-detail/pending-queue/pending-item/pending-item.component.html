@@ -1,8 +1,8 @@
 <div class="bg-white rounded-xl flex px-3 py-2 my-2">
-    <img class="w-12" src="https://avatars.dicebear.com/api/human/abc.svg" alt="Avatar" />
+    <img class="w-12" src="https://avatars.dicebear.com/api/big-smile/{{ pfpSeed }}.svg" alt="Avatar" />
 
     <div class="flex flex-col justify-around ml-2">
-        <span class="font-bold text-lg">Anna</span>
+        <span class="font-bold text-lg">{{ name }}</span>
         <span *ngIf="delayAttendee" class="text-purple-700 text-sm">Delay attendee</span>
     </div>
 

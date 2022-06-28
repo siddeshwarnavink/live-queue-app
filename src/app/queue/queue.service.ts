@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, getDocs, onSnapshot, getDoc, doc } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, getDoc, doc, updateDoc, where, query, arrayUnion } from "firebase/firestore";
 
 import { Queue } from './queue.modal';
 import { firestore } from '../config/firebase';
@@ -14,7 +14,9 @@ export class QueueService {
     // { id: '2', title: "Dumb queue", isLive: false, totalBooked: 0, totalBooking: 25 }
   ];
   private singleQueue: any;
+  public selectedPerson: any;
   public singleQueueLoading = false;
+  public selectedPersonLoading = false;
   private queueSubscriptions: Function[] = [];
 
   getQueue() {
@@ -47,8 +49,6 @@ export class QueueService {
           if (liveDoc.exists()) {
             this.queueList[queueIndex].isLive = liveDoc.data()['isLive'];
           }
-
-          console.log(liveDoc.data());
         })
 
         fetchedQueue.push({
@@ -76,12 +76,15 @@ export class QueueService {
       if (queueDoc.exists()) {
         const subscription = onSnapshot(queueDoc.ref, { includeMetadataChanges: true }, liveDoc => {
           if (liveDoc.exists()) {
+            this.fetchPersonOfTokenNumber(liveDoc.data()['activeToken'], false);
+
             this.singleQueue = {
               id: liveDoc.id,
               title: liveDoc.data()['title'],
               totalBooked: liveDoc.data()['totalBooked'],
               totalBooking: liveDoc.data()['totalBooking'],
-              isLive: liveDoc.data()['isLive']
+              isLive: liveDoc.data()['isLive'],
+              activeToken: liveDoc.data()['activeToken']
             }
           }
         });
@@ -91,12 +94,92 @@ export class QueueService {
           title: queueDoc.data()['title'],
           totalBooked: queueDoc.data()['totalBooked'],
           totalBooking: queueDoc.data()['totalBooking'],
-          isLive: queueDoc.data()['isLive']
+          isLive: queueDoc.data()['isLive'],
+          activeToken: queueDoc.data()['activeToken']
         }
         this.singleQueueLoading = false;
         this.queueSubscriptions.push(subscription);
       }
     });
+  }
+
+  fetchPersonOfTokenNumber(tokenNumber: number, showLoading = true) {
+    if (showLoading) {
+      this.selectedPersonLoading = true;
+    }
+
+    const fetchingQuery = query(collection(firestore, 'persons'), where('tokenNumber', '==', tokenNumber))
+    getDocs(fetchingQuery).then(docs => {
+      docs.forEach(doc => {
+        this.selectedPerson = {
+          id: doc['id'],
+          ...doc.data()
+        }
+        this.selectedPersonLoading = false;
+      });
+    });
+  }
+
+  updateSingleQueueActiveToken(newToken: number) {
+    updateDoc(doc(firestore, 'queue', this.singleQueue.id), {
+      activeToken: newToken
+    });
+
+    this.singleQueue.activeToken = newToken;
+  }
+
+  updateNextUp(token: number) {
+    getDocs(query(collection(firestore, 'persons'), where('tokenNumber', '==', token))).then(docs => {
+      docs.forEach(nextUpPersonDoc => {
+        updateDoc(doc(firestore, 'persons', nextUpPersonDoc.id), {
+          isOnNextUp: true
+        });
+      });
+    });
+    getDocs(query(collection(firestore, 'persons'), where('tokenNumber', '==', token - 1))).then(docs => {
+      docs.forEach(nextUpPersonDoc => {
+        updateDoc(doc(firestore, 'persons', nextUpPersonDoc.id), {
+          isOnNextUp: false
+        });
+      });
+    });
+  }
+
+  goToNextPerson() {
+    this.updateSingleQueueActiveToken(this.singleQueue.activeToken + 1);
+    this.updateNextUp(this.singleQueue.activeToken + 1);
+  }
+
+  skipPerson() {
+    // updateDoc(doc(firestore, 'queue', this.singleQueue.id), {
+    //   skipped: arrayUnion(this.selectedPerson)
+    // }).then(() => {
+    //   this.updateSingleQueueActiveToken(this.singleQueue.activeToken + 1);
+    // });
+    updateDoc(doc(firestore, 'persons', this.selectedPerson.id), {
+      isSkipped: true
+    }).then(() => {
+      this.updateSingleQueueActiveToken(this.singleQueue.activeToken + 1);
+    });
+
+    this.updateNextUp(this.singleQueue.activeToken + 1);
+  }
+
+  goLiveOnSingleSelectedQueue() {
+    updateDoc(doc(firestore, 'queue', this.singleQueue.id), {
+      isLive: true,
+      activeToken: 1
+    });
+
+    getDocs(query(collection(firestore, 'persons'), where('tokenNumber', '==', 2))).then(docs => {
+      docs.forEach(nextUpPersonDoc => {
+        updateDoc(doc(firestore, 'persons', nextUpPersonDoc.id), {
+          isOnNextUp: true
+        });
+      });
+    });
+
+    this.singleQueue.activeToken = 1;
   }
 
   unsubscribeQueueSubscriptions() {

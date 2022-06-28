@@ -3,7 +3,9 @@
         <app-spinner></app-spinner>
     </div>
 
-    <app-queue-item *ngFor="let queueItem of queueService.getQueue()" [id]="queueItem.id" [title]="queueItem.title"
-        [isLive]="queueItem.isLive" [totalBooked]="queueItem.totalBooked" [totalBooking]="queueItem.totalBooking">
-    </app-queue-item>
+    <section *ngIf="!queueService.queueListLoading">
+        <app-queue-item *ngFor="let queueItem of queueService.getQueue()" [id]="queueItem.id" [title]="queueItem.title"
+            [isLive]="queueItem.isLive" [totalBooked]="queueItem.totalBooked" [totalBooking]="queueItem.totalBooking">
+        </app-queue-item>
+    </section>
 </div>

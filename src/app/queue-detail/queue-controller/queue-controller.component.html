@@ -1,15 +1,28 @@
 <div class="p-5 bg-white rounded-xl flex flex-col">
-    <div class="text-center text-gray-400">7/10</div>
+    <section *ngIf="queueService.selectedPersonLoading" class="text-center">
+        <app-spinner></app-spinner>
+    </section>
+    <section *ngIf="!queueService.selectedPersonLoading">
+        <div class="text-center text-gray-400">{{ queueService.selectedPerson.tokenNumber
+            }}/{{this.queueService.getSingleQueue().totalBooked}}</div>
 
-    <img class="w-16 m-auto" src="https://avatars.dicebear.com/api/human/abc.svg" alt="">
+        <img class="w-16 m-auto"
+            src="https://avatars.dicebear.com/api/big-smile/{{ queueService.selectedPerson.pfpSeed }}.svg" alt="">
 
-    <div class="flex flex-col text-center my-3">
-        <span class="text-purple-700">Next person</span>
-        <span class="text-2xl font-bold">James</span>
-    </div>
+        <div class="flex flex-col text-center my-3">
+            <span class="text-purple-700">Next person</span>
+            <span class="text-2xl font-bold">{{ queueService.selectedPerson.name }}</span>
+        </div>
 
-    <div class="flex justify-between mt-5">
-        <app-button [flat]="true">Skip this person</app-button>
-        <app-button>Done</app-button>
-    </div>
+        <div class="flex justify-between mt-5">
+            <app-button [flat]="true" (click)="skipPersonHandler()">Skip this person</app-button>
+            <app-button *ngIf="queueService.selectedPerson.tokenNumber!==this.queueService.getSingleQueue().totalBooked"
+                (click)="goToNextPersonHandler()">Next person</app-button>
+
+            <app-button
+                *ngIf="queueService.selectedPerson.tokenNumber===this.queueService.getSingleQueue().totalBooked">
+                Done
+            </app-button>
+        </div>
+    </section>
 </div>
