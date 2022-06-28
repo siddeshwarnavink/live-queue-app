@@ -1,0 +1,4 @@
+<button (click)="onClickHandler" class="rounded-2xl py-2 font-bold outline-none cursor-pointer"
+    [ngClass]="[flat ? 'bg-transparant text-purple-700' : 'bg-purple-700 text-white px-8']">
+    <ng-content></ng-content>
+</button>

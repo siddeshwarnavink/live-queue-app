@@ -1,0 +1,14 @@
+<div class="bg-white rounded-xl flex px-3 py-2 my-2">
+    <img class="w-12" src="https://avatars.dicebear.com/api/human/abc.svg" alt="Avatar" />
+
+    <div class="flex flex-col justify-around ml-2">
+        <span class="font-bold text-lg">Anna</span>
+        <span *ngIf="delayAttendee" class="text-purple-700 text-sm">Delay attendee</span>
+    </div>
+
+    <div class="flex-1"></div>
+
+    <div *ngIf="delayAttendee" class="flex flex-col justify-around mr-2">
+        <button class="text-purple-700 font-bold outline-none text-xl">X</button>
+    </div>
+</div>
