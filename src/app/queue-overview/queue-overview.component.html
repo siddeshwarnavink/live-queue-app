@@ -1,5 +1,5 @@
 <div>
-    <app-queue-item id="a" title="Awesome Crowd" [totalBooking]="10" [totalBooked]="10" [isLive]="true">
+    <app-queue-item *ngFor="let queueItem of queueService.getQueue()" [id]="queueItem.id" [title]="queueItem.title"
+        [isLive]="queueItem.isLive" [totalBooked]="queueItem.totalBooked" [totalBooking]="queueItem.totalBooking">
     </app-queue-item>
-    <app-queue-item id="b" title="Dumb Crowd" [totalBooking]="10" [totalBooked]="0"></app-queue-item>
 </div>
