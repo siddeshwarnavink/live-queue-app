@@ -15,6 +15,7 @@ export class QueueService {
     // { id: '2', title: "Dumb queue", isLive: false, totalBooked: 0, totalBooking: 25 }
   ];
   private singleQueue: any;
+  private highestTokenNumber = 0;
   public selectedPerson: any;
   public singleQueueLoading = false;
   public selectedPersonLoading = false;
@@ -130,7 +131,8 @@ export class QueueService {
   }
 
   updateNextUp(id: string, tokenNumber: number) {
-    const isSkippedPerson = tokenNumber < this.selectedPerson.tokenNumber;
+    // const isSkippedPerson = (tokenNumber < this.selectedPerson.tokenNumber);
+    const isSkippedPerson = this.highestTokenNumber !== tokenNumber;
 
     updateDoc(doc(firestore, 'persons', id), {
       isOnNextUp: false,
@@ -149,6 +151,10 @@ export class QueueService {
   }
 
   goToNextPerson() {
+    if (this.personsService.upNextList[0].tokenNumber > this.highestTokenNumber) {
+      this.highestTokenNumber = this.personsService.upNextList[0].tokenNumber;
+    }
+
     this.updateNextUp(this.personsService.upNextList[0].id, this.personsService.upNextList[0].tokenNumber);
     this.updateSingleQueueActiveToken(this.personsService.upNextList[0].tokenNumber);
   }
@@ -159,6 +165,10 @@ export class QueueService {
     // }).then(() => {
     //   this.updateSingleQueueActiveToken(this.singleQueue.activeToken + 1);
     // });
+    if (this.personsService.upNextList[0].tokenNumber > this.highestTokenNumber) {
+      this.highestTokenNumber = this.personsService.upNextList[0].tokenNumber;
+    }
+
     updateDoc(doc(firestore, 'persons', this.selectedPerson.id), {
       isSkipped: true
     }).then(() => {
@@ -169,6 +179,8 @@ export class QueueService {
   }
 
   goLiveOnSingleSelectedQueue() {
+    this.highestTokenNumber = 1;
+
     updateDoc(doc(firestore, 'queue', this.singleQueue.id), {
       isLive: true,
       activeToken: 1
@@ -195,7 +207,6 @@ export class QueueService {
 
   TEST_ONLY_resetEverything() {
     console.log('RESETTING...');
-
 
     updateDoc(doc(firestore, 'queue', this.singleQueue.id), {
       isLive: false,

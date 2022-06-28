@@ -23,5 +23,6 @@ export class SelectNextPersonComponent implements OnInit {
 
   selectPersonHandler(id: string) {
     this.personsService.addSkippedPersonToQueue(id);
+    this.toggleOverlayHandler();
   }
 }
