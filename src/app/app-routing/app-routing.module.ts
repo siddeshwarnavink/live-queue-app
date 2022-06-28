@@ -6,7 +6,7 @@ import { QueueOverviewComponent } from '../queue-overview/queue-overview.compone
 
 const routes: Routes = [
     { path: '', component: QueueOverviewComponent },
-    { path: 'queue', component: QueueDetailComponent },
+    { path: 'queue/:id', component: QueueDetailComponent },
 ];
 
 @NgModule({

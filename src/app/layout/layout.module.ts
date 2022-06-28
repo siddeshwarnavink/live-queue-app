@@ -1,16 +1,20 @@
 import { NgModule } from "@angular/core";
+import { RouterModule } from "@angular/router";
 
 import { LayoutComponent } from "./layout.component";
 import { ToolbarComponent } from "./toolbar/toolbar.component";
 
+const components = [
+    LayoutComponent,
+    ToolbarComponent
+]
+
 @NgModule({
-    declarations: [
-        LayoutComponent,
-        ToolbarComponent
+    declarations: [...components],
+    imports: [
+        RouterModule
     ],
-    exports: [
-        LayoutComponent,
-        ToolbarComponent
-    ]
+    bootstrap: [...components],
+    exports: [...components]
 })
 export class LayoutModule { }
