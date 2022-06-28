@@ -133,7 +133,8 @@ export class QueueService {
     const isSkippedPerson = tokenNumber < this.selectedPerson.tokenNumber;
 
     updateDoc(doc(firestore, 'persons', id), {
-      isOnNextUp: false
+      isOnNextUp: false,
+      isSkipped: false
     });
 
     if (!isSkippedPerson) {
@@ -148,9 +149,7 @@ export class QueueService {
   }
 
   goToNextPerson() {
-    // Update upnext list
     this.updateNextUp(this.personsService.upNextList[0].id, this.personsService.upNextList[0].tokenNumber);
-    // Update the currentSelected in queue document
     this.updateSingleQueueActiveToken(this.personsService.upNextList[0].tokenNumber);
   }
 
