@@ -71,6 +71,8 @@ export class PersonsService {
 
     unsubscribeQueueSubscriptions() {
         this.upNextPersonSubscription();
-        this.skippedPersonsSubscription();
+        if (this.skippedPersonsSubscription) {
+            this.skippedPersonsSubscription();
+        }
     }
 }
