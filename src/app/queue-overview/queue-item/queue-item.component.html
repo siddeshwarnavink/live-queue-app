@@ -5,7 +5,7 @@
             <span id="queue-item-subtitle" class="text-gray-700">{{ totalBooked }}/{{ totalBooking }} booked</span>
         </div>
 
-        <div id="queue-item-live" *ngIf="isLive">
+        <div id="queue-item-live" *ngIf="isLive" class="animate-live-now">
             <img src="/assets/icons/LiveIcon.svg" alt="Live now" class="w-6 m-auto" />
             <span class="text-purple-700 uppercase">Live now</span>
         </div>

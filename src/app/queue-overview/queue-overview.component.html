@@ -1,9 +1,21 @@
 <div>
-    <div *ngIf="queueService.queueListLoading" class="text-center">
+    <!-- <div *ngIf="queueService.queueListLoading" class="text-center">
         <app-spinner></app-spinner>
+    </div> -->
+
+    <div *ngIf="queueService.queueListLoading" class="shadow rounded-md p-4 max-w-sm w-full mx-auto">
+        <div class="animate-pulse flex space-x-4">
+            <div class="space-y-3">
+                <div class="h-2 bg-slate-400 rounded"></div>
+
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="h-2 w-12 bg-slate-400 rounded col-span-2"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <section *ngIf="!queueService.queueListLoading">
+    <section *ngIf="!queueService.queueListLoading" class="animate-list-from-top">
         <app-queue-item *ngFor="let queueItem of queueService.getQueue()" [id]="queueItem.id" [title]="queueItem.title"
             [isLive]="queueItem.isLive" [totalBooked]="queueItem.totalBooked" [totalBooking]="queueItem.totalBooking">
         </app-queue-item>
