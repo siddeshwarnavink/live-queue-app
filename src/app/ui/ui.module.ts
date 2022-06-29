@@ -5,6 +5,7 @@ import { ButtonComponent } from "./button/button.component";
 import { SpinnerComponent } from './spinner/spinner.component';
 import { BottomOverlayComponent } from './bottom-overlay/bottom-overlay.component';
 import { BackdropComponent } from './backdrop/backdrop.component';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 const components = [
     ButtonComponent,
@@ -17,6 +18,7 @@ const components = [
     declarations: [...components],
     imports: [
         CommonModule,
+        BrowserAnimationsModule
     ],
     bootstrap: [...components],
     exports: [...components]
