@@ -71,6 +71,9 @@ export class QueueService {
   }
 
   skipPerson() {
+    this.personsService.skippedList.push(this.selectedPerson);
+    this.selectedPerson = this.personsService.upNextList[0];
+
     this.queueServiceAPI.skipPersonInAPI(this);
   }
 
