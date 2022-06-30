@@ -1,27 +1,60 @@
-# LiveQueueApp
+# live-queue-app
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.3.
+A mobile-first web app which helps in manageing people waiting in queue realtime
 
-## Development server
+[LIVE DEMO](https://live-queue-app.web.app/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+![Banner image](md_images/banner.png)
 
-## Code scaffolding
+## Getting started
+To get this project working, firs you need to clone this repository
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+git clone <repo-url>
+```
+now install the dependencies using npm or yarn 
 
-## Build
+```bash
+npm install
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+now go to ``src/app/config/firebase.ts`` and chanege it to your firebase app configuration
+```ts
 
-## Running unit tests
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+const firebaseConfig = {
+    // Your firebase config goes here....
+};
+```
 
-## Running end-to-end tests
+then setup your firestore [datatbase with sample data](SampleData.md). After that you can run the app using Angular CLI
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+ng serve
+```
 
-## Further help
+You can find the app working in ``localhost:4200``
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Contributing Content
+Edit and fix the sit. Feel free to submit PRs for small issues. For large issues or features open an issue first.
+
+First, fork this repo on Github.
+
+```
+git clone <your-forked-repo>
+npm install
+npm run dev
+
+git checkout -b my-fix
+```
+
+## Fix some code
+Find something wrong which is need to be fixed?  Make the changes in a branch and run the following code:
+
+```
+git commit -m "fix: corrected a typo"
+git push origin my-fix
+```
