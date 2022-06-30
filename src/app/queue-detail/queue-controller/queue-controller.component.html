@@ -1,6 +1,8 @@
-<app-button (click)="resetEverythingHandler()">
-    Reset everything
-</app-button>
+<app-dev-only>
+    <app-button theme="danger" (click)="resetEverythingHandler()">
+        Reset everything
+    </app-button>
+</app-dev-only>
 
 <div class="p-5 bg-white rounded-xl flex flex-col">
     <section *ngIf="queueService.selectedPersonLoading" class="text-center">

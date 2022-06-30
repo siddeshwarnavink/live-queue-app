@@ -5,6 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './button.component.html',
 })
 export class ButtonComponent {
+  @Input() theme = 'default';
   @Input() flat = false;
   @Input() isDisable = false;
   @Output() click = new EventEmitter();
