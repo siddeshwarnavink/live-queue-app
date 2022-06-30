@@ -11,5 +11,9 @@ export class QueueItemComponent {
   @Input() totalBooked!: number
   @Input() isLive = false;
 
+  isDisabled() {
+    return this.totalBooked < 1;
+  }
+
   constructor() { }
 }
