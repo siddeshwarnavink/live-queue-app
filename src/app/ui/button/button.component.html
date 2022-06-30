@@ -1,4 +1,4 @@
-<button (click)="onClickHandler" class="rounded-2xl py-2 font-bold outline-none cursor-pointer"
-    [ngClass]="[flat ? 'bg-transparant text-purple-700' : 'bg-purple-700 text-white px-8']">
+<button (click)="onClickHandler" class="rounded-2xl py-2 font-bold outline-none cursor-pointer disabled:opacity-75"
+    [ngClass]="[flat ? 'bg-transparant text-purple-700' : 'bg-purple-700 text-white px-8']" [disabled]="isDisable">
     <ng-content></ng-content>
 </button>

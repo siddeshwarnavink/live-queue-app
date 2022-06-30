@@ -19,8 +19,10 @@
         </div>
 
         <div class="flex justify-between mt-5">
-            <app-button [flat]="true" (click)="skipPersonHandler()">Skip this person</app-button>
-            <app-button *ngIf="queueService.selectedPerson.tokenNumber!==this.queueService.getSingleQueue().totalBooked"
+            <app-button [isDisable]="personsService.upNextList.length < 1" [flat]="true" (click)="skipPersonHandler()">
+                Skip this person</app-button>
+            <app-button [isDisable]="personsService.upNextList.length < 1"
+                *ngIf="queueService.selectedPerson.tokenNumber!==this.queueService.getSingleQueue().totalBooked"
                 (click)="goToNextPersonHandler()">Next person</app-button>
 
             <app-button (click)="resetEverythingHandler()"
