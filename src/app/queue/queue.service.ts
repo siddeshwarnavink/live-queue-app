@@ -60,6 +60,8 @@ export class QueueService {
   }
 
   goToNextPerson() {
+    this.selectedPerson = this.personsService.upNextList[0];
+
     if (this.personsService.upNextList[0].tokenNumber > this.highestTokenNumber) {
       this.highestTokenNumber = this.personsService.upNextList[0].tokenNumber;
     }
