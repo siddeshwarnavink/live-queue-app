@@ -56,6 +56,9 @@ export class PersonsService {
     }
 
     addSkippedPersonToQueue(personId: string) {
+        this.skippedList = this.skippedList.filter(person => {
+            return person.id !== personId
+        });
         updateDoc(doc(firestore, 'persons', personId), {
             isSkipped: true,
             isOnNextUp: true
@@ -63,6 +66,16 @@ export class PersonsService {
     }
 
     removeSkippedUserFromNextUp(personId: string) {
+        const removedPerson = this.upNextList.find(person => {
+            return person.id === personId
+        });
+
+        this.upNextList = this.upNextList.filter(person => {
+            return person.id !== personId
+        });
+
+        this.skippedList.push(removedPerson);
+
         updateDoc(doc(firestore, 'persons', personId), {
             isOnNextUp: false,
             isSkipped: true,
