@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PersonsService } from 'src/app/queue/persons.service';
 
 import { QueueService } from 'src/app/queue/queue.service';
 
@@ -9,6 +10,7 @@ import { QueueService } from 'src/app/queue/queue.service';
 export class QueueControllerComponent implements OnInit {
   constructor(
     public queueService: QueueService,
+    public personsService: PersonsService
   ) { }
 
   ngOnInit(): void {
