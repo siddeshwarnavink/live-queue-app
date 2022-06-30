@@ -12,7 +12,7 @@ const components = [
 @NgModule({
     declarations: [...components],
     imports: [
-        RouterModule
+        RouterModule,
     ],
     bootstrap: [...components],
     exports: [...components]

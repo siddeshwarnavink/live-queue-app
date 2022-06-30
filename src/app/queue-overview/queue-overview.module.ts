@@ -5,10 +5,12 @@ import { RouterModule } from "@angular/router";
 import { QueueItemComponent } from "./queue-item/queue-item.component";
 import { QueueOverviewComponent } from "./queue-overview.component";
 import { UIModule } from "../ui/ui.module";
+import { QueueItemPulseComponent } from './queue-item-pulse/queue-item-pulse.component';
 
 const components = [
     QueueOverviewComponent,
-    QueueItemComponent
+    QueueItemComponent,
+    QueueItemPulseComponent
 ]
 
 @NgModule({
