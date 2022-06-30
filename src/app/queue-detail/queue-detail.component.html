@@ -5,8 +5,10 @@
 <section *ngIf="!queueService.singleQueueLoading">
     <section *ngIf="queueService.getSingleQueue().isLive">
         <app-queue-controller></app-queue-controller>
-        <app-pending-queue></app-pending-queue>
-        <app-select-next-person></app-select-next-person>
+        <section *ngIf="queueService.selectedPerson.tokenNumber !== this.queueService.getSingleQueue().totalBooked">
+            <app-pending-queue></app-pending-queue>
+            <app-select-next-person></app-select-next-person>
+        </section>
     </section>
 
     <app-queue-start *ngIf="!queueService.getSingleQueue().isLive" [title]="queueService.getSingleQueue().title"
